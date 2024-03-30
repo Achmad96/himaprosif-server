@@ -6,7 +6,7 @@ import {
     HttpCode,
     HttpStatus,
 } from '@nestjs/common';
-import { AuthService } from 'src/auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 import { SignInDto } from './auth.dto';
 
 @Controller('auth')
