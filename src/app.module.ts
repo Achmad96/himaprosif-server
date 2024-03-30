@@ -4,11 +4,17 @@ import { AppService } from './app.service';
 import { PostModule } from './post/post.module';
 import { AuthModule } from './auth/auth.module';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
     imports: [
-        PostModule,
+        JwtModule.register({
+            global: true,
+            secret: process.env.ACCESS_SECRET,
+            signOptions: { expiresIn: '3d' },
+        }),
         AuthModule,
+        PostModule,
         ThrottlerModule.forRoot([
             {
                 ttl: 60000, // millisecond
