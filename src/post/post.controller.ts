@@ -49,8 +49,8 @@ export class PostController {
     // prettier-ignore
     @UseGuards(AuthGuard)
     @Post()
-    async create(@Headers() header: Headers, @Body() body: CreatePostDto): Promise<ApiResponseDto> {
-        const token = this.authService.extractTokenFromHeader(header);
+    async create(@Headers() headers: Headers, @Body() body: CreatePostDto): Promise<ApiResponseDto> {
+        const token = this.authService.extractTokenFromHeader(headers);
         const authorId = this.authService.getAuthorId(token);
         const { title, content } = body;
         
@@ -69,8 +69,8 @@ export class PostController {
     // prettier-ignore
     @UseGuards(AuthGuard)
     @Patch(':postId')
-    async edit(@Param('postId') postId: string, @Headers() header: Headers, @Body() body: UpdatePostDto): Promise<ApiResponseDto> {
-        const token = this.authService.extractTokenFromHeader(header);
+    async edit(@Param('postId') postId: string, @Headers() headers: Headers, @Body() body: UpdatePostDto): Promise<ApiResponseDto> {
+        const token = this.authService.extractTokenFromHeader(headers);
         const authorId = this.authService.getAuthorId(token);
         const { title, content } = body;
 
@@ -91,8 +91,8 @@ export class PostController {
     // prettier-ignore
     @UseGuards(AuthGuard)
     @Delete(':postId')
-    async delete(@Param('postId') postId: string, @Headers() header: Headers): Promise<ApiResponseDto> {
-        const token = this.authService.extractTokenFromHeader(header);
+    async delete(@Param('postId') postId: string, @Headers() headers: Headers): Promise<ApiResponseDto> {
+        const token = this.authService.extractTokenFromHeader(headers);
         const authorId = this.authService.getAuthorId(token);
 
         return this.postService
