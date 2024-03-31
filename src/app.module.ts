@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { PostModule } from './post/post.module';
-import { AuthModule } from './auth/auth.module';
-import { ThrottlerModule } from '@nestjs/throttler';
 import { JwtModule } from '@nestjs/jwt';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { AuthModule } from './auth/auth.module';
+import { PostModule } from './post/post.module';
+
+import { AppService } from './app.service';
+import { AppController } from './app.controller';
 
 @Module({
     imports: [
@@ -13,14 +14,14 @@ import { JwtModule } from '@nestjs/jwt';
             secret: process.env.ACCESS_SECRET,
             signOptions: { expiresIn: '3d' },
         }),
-        AuthModule,
-        PostModule,
         ThrottlerModule.forRoot([
             {
                 ttl: 60000, // millisecond
                 limit: 10,
             },
         ]),
+        AuthModule,
+        PostModule,
     ],
     controllers: [AppController],
     providers: [AppService],

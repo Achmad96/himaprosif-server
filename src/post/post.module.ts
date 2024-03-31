@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { PostController } from './post.controller';
+import { AuthModule } from 'src/auth/auth.module';
 
 import { PostService } from './post.service';
-import { AuthModule } from 'src/auth/auth.module';
+import { PostController } from './post.controller';
 
 @Module({
     imports: [AuthModule],
