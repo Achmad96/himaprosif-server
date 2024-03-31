@@ -54,9 +54,6 @@ export class PostController {
         const authorId = this.authService.getAuthorId(token);
         const { title, content } = body;
         
-        if (!title || !content)
-            throw new BadRequestException('title and content are required');
-
         return this.postService
             .createPost(authorId, title, content)
             .then((data) => ({
@@ -74,8 +71,6 @@ export class PostController {
         const authorId = this.authService.getAuthorId(token);
         const { title, content } = body;
 
-        if (!title || !content)
-            throw new BadRequestException('title and content are required');
         return this.postService
             .editPost(authorId, postId, title, content)
             .then((data) => ({
