@@ -40,10 +40,9 @@ export class AuthService {
         };
     }
 
-    verifyRefreshToken(header: Headers) {
-        const refreshToken = this.extractTokenFromHeader(header);
+    verifyRefreshToken(refresh_token: string) {
         return jwt.verify(
-            refreshToken,
+            refresh_token,
             process.env.REFRESH_SECRET,
             (err, res) => {
                 if (err) {

@@ -6,8 +6,9 @@ import {
     HttpCode,
     HttpStatus,
 } from '@nestjs/common';
+
 import { AuthService } from '../auth/auth.service';
-import { SignInDto } from './auth.dto';
+import { RefreshTokenDto, SignInDto } from './auth.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -21,7 +22,7 @@ export class AuthController {
 
     @HttpCode(HttpStatus.OK)
     @Get('refresh_token')
-    getMe(@Headers() header: Headers) {
-        return this.service.verifyRefreshToken(header);
+    getMe(@Headers() header: RefreshTokenDto) {
+        return this.service.verifyRefreshToken(header.refreshToken);
     }
 }
