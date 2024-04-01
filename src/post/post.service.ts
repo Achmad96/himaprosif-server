@@ -1,46 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../utils/prisma.service';
 
+const PostSelect = {
+    id: true,
+    title: true,
+    content: true,
+    author: {
+        select: {
+            id: true,
+            name: true,
+        },
+    },
+    created_at: true,
+    updated_at: true,
+};
+
 @Injectable()
 export class PostService {
     constructor(private readonly prisma: PrismaService) {}
 
     async getPostById(postId: string) {
-        return await this.prisma.post.findFirst({
+        return await this.prisma.post.findUnique({
             where: {
                 id: postId,
             },
-            select: {
-                id: true,
-                title: true,
-                content: true,
-                author: {
-                    select: {
-                        id: true,
-                        name: true,
-                    },
-                },
-                created_at: true,
-                updated_at: true,
-            },
+            select: PostSelect,
         });
     }
 
     async getPosts() {
         return await this.prisma.post.findMany({
-            select: {
-                id: true,
-                title: true,
-                content: true,
-                author: {
-                    select: {
-                        id: true,
-                        name: true,
-                    },
-                },
-                created_at: true,
-                updated_at: true,
-            },
+            select: PostSelect,
         });
     }
 
