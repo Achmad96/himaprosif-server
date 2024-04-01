@@ -50,6 +50,7 @@ export class AuthService {
                 }
                 const { data } = res['data'];
                 const { id, username, name } = data;
+
                 // prettier-ignore
                 return {
                     access_token: jwt.sign(
@@ -70,7 +71,7 @@ export class AuthService {
         return type === 'Bearer' ? token : undefined;
     }
 
-    getAuthorId(token: string): string {
+    getAuthorIdByToken(token: string): string {
         const payload = jwt.verify(token, process.env.ACCESS_SECRET);
         return payload ? payload['data'].id : undefined;
     }

@@ -51,9 +51,9 @@ export class PostController {
     @Post()
     async create(@Headers() headers: Headers, @Body() body: CreatePostDto): Promise<ApiResponseDto> {
         const token = this.authService.extractTokenFromHeader(headers);
-        const authorId = this.authService.getAuthorId(token);
+        const authorId = this.authService.getAuthorIdByToken(token);
         const { title, content } = body;
-        
+
         return this.postService
             .createPost(authorId, title, content)
             .then((data) => ({
@@ -68,7 +68,7 @@ export class PostController {
     @Patch(':postId')
     async edit(@Param('postId') postId: string, @Headers() headers: Headers, @Body() body: UpdatePostDto): Promise<ApiResponseDto> {
         const token = this.authService.extractTokenFromHeader(headers);
-        const authorId = this.authService.getAuthorId(token);
+        const authorId = this.authService.getAuthorIdByToken(token);
         const { title, content } = body;
 
         return this.postService
@@ -88,7 +88,7 @@ export class PostController {
     @Delete(':postId')
     async delete(@Param('postId') postId: string, @Headers() headers: Headers): Promise<ApiResponseDto> {
         const token = this.authService.extractTokenFromHeader(headers);
-        const authorId = this.authService.getAuthorId(token);
+        const authorId = this.authService.getAuthorIdByToken(token);
 
         return this.postService
             .deletePost(authorId, postId)
@@ -98,7 +98,7 @@ export class PostController {
                 statusCode: 200,
             }))
             .catch(() => {
-                throw new GoneException('Error deleting post');
+                throw new GoneException('Post not found');
             });
     }
 }
