@@ -18,7 +18,7 @@ import { PostService } from './post.service';
 import { AuthService } from '../auth/auth.service';
 
 import { CreatePostDto, UpdatePostDto } from './post.dto';
-import { ApiResponseDto } from '../utils/response.dto';
+import { ApiResponseDto } from '../app.dto';
 
 @Controller('admin/posts')
 export class PostController {

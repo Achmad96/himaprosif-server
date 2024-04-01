@@ -9,7 +9,7 @@ export class AuthService {
     constructor(private readonly prismaService: PrismaService) {}
     // prettier-ignore
     async signIn(usernameInput: string, passwordInput: string): Promise<{access_token: string; refresh_token: string; statusCode: 200}> {
-        const user = await this.prismaService.admin.findFirst({
+        const user = await this.prismaService.admin.findUnique({
             where: { username: usernameInput },
         });
         if (!user) {
