@@ -9,17 +9,17 @@ export class AuthService {
     constructor(private readonly prismaService: PrismaService) {}
     // prettier-ignore
     async signIn(usernameInput: string, passwordInput: string): Promise<{access_token: string; refresh_token: string; statusCode: 200}> {
-        const user = await this.prismaService.admin.findUnique({
+        const admin = await this.prismaService.admin.findUnique({
             where: { username: usernameInput },
         });
-        if (!user) {
+        if (!admin) {
             throw new UnauthorizedException();
         }
-        const match = await bcrypt.compare(passwordInput, user.password);
+        const match = await bcrypt.compare(passwordInput, admin.password);
         if (!match) {
             throw new UnauthorizedException();
         }
-        const { id, username, name } = user;
+        const { id, username, name } = admin;
         
         return {
             refresh_token: jwt.sign(

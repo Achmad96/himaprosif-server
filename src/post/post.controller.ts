@@ -32,9 +32,11 @@ export class PostController {
     async getPostById(@Param('postId') postId: string): Promise<ApiResponseDto> {
         return await this.postService.getPostById(postId).then((data) => ({
             data,
-            message: 'Success getting posts',
+            message: 'Success found the post',
             statusCode: 200,
-        }));
+        })).catch(() => {
+            throw new NotFoundException('Post not found');
+        });
     }
 
     @Get()
