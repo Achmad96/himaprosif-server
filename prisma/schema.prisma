@@ -23,7 +23,7 @@ model Admin {
 
 model Post {
   id         String   @id @default(cuid())
-  title      String   @db.VarChar(20)
+  title      String   @db.VarChar(30)
   content    String
   authorId   String
   author     Admin    @relation(fields: [authorId], references: [id])
