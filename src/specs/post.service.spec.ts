@@ -33,7 +33,6 @@ const db = {
             .mockImplementation((postSelect) =>
                 posts.find((post) => post.id === postSelect.where.id),
             ),
-        findFirst: jest.fn().mockResolvedValue(firstPost),
         create: jest
             .fn()
             .mockImplementation(
