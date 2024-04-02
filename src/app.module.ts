@@ -11,7 +11,7 @@ import { AppController } from './app.controller';
     imports: [
         JwtModule.register({
             global: true,
-            secret: process.env.ACCESS_SECRET,
+            secret: process.env.REFRESH_SECRET,
             signOptions: { expiresIn: '3d' },
         }),
         ThrottlerModule.forRoot([
