@@ -24,7 +24,6 @@ const posts = [
     },
 ];
 
-const firstPost = posts[0];
 const db = {
     post: {
         findMany: jest.fn().mockResolvedValue(posts),

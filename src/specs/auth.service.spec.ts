@@ -32,9 +32,7 @@ const db = {
     admin: {
         findMany: jest.fn().mockResolvedValue(admin),
         findUnique: jest.fn().mockResolvedValue(firstAdmin),
-        findFirst: jest.fn().mockResolvedValue(firstAdmin),
         create: jest.fn().mockReturnValue(firstAdmin),
-        save: jest.fn(),
         update: jest.fn().mockResolvedValue(firstAdmin),
         delete: jest.fn().mockResolvedValue(firstAdmin),
     },
