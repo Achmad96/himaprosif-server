@@ -10,15 +10,17 @@ import {
     Param,
     Patch,
     Post,
+    Query,
     UseGuards,
 } from '@nestjs/common';
 
-import { AuthGuard } from '../auth/auth.guard';
-import { PostService } from './post.service';
-import { AuthService } from '../auth/auth.service';
+import { AuthGuard } from '@/auth/auth.guard';
+import { AuthService } from '@/auth/auth.service';
 
-import { CreatePostDto, UpdatePostDto } from './post.dto';
-import { ApiResponseDto } from '../app.dto';
+import { PostService } from '@/post/post.service';
+import { CreatePostDto, UpdatePostDto } from '@/post/post.dto';
+
+import { ApiResponseDto } from '@/app.dto';
 
 @Controller('admin/posts')
 export class PostController {
@@ -27,31 +29,39 @@ export class PostController {
         private readonly authService: AuthService,
     ) {}
 
-    // prettier-ignore
-    @Get(':postId')
-    async getPostById(@Param('postId') postId: string): Promise<ApiResponseDto> {
-        return await this.postService.getPostById(postId).then((data) => ({
-            data,
-            message: 'Success found the post',
-            statusCode: 200,
-        })).catch(() => {
-            throw new NotFoundException('Post not found');
+    @Get()
+    async findPostById(@Query('id') id: string): Promise<ApiResponseDto> {
+        return this.postService.getPostById(id).then((post) => {
+            if (post === null) {
+                throw new BadRequestException('Post not found');
+            }
+            return {
+                data: post,
+                message: 'Post found',
+                statusCode: 200,
+            };
         });
     }
 
-    @Get()
-    async getPosts(): Promise<ApiResponseDto> {
-        return await this.postService.getPosts().then((data) => ({
-            data,
+    @Get(':page')
+    async getPosts(@Param('page') page: string): Promise<ApiResponseDto> {
+        const pageSize = await this.postService.getPostsSize();
+        const posts = await this.postService.getPosts(Number(page));
+        if (pageSize === 0)
+            throw new BadRequestException("There's no posts available");
+        return {
+            data: { ...posts, page, pageSize },
             message: 'Success getting posts',
             statusCode: 200,
-        }));
+        };
     }
 
-    // prettier-ignore
     @UseGuards(AuthGuard)
     @Post()
-    async create(@Headers() headers: Headers, @Body() body: CreatePostDto): Promise<ApiResponseDto> {
+    async create(
+        @Headers() headers: Headers,
+        @Body() body: CreatePostDto,
+    ): Promise<ApiResponseDto> {
         const token = this.authService.extractTokenFromHeader(headers);
         const authorId = this.authService.getAuthorIdByToken(token);
         const { title, content } = body;
@@ -65,10 +75,13 @@ export class PostController {
             }));
     }
 
-    // prettier-ignore
     @UseGuards(AuthGuard)
-    @Patch(':postId')
-    async edit(@Param('postId') postId: string, @Headers() headers: Headers, @Body() body: UpdatePostDto): Promise<ApiResponseDto> {
+    @Patch(':poBadRequestExceptionstId')
+    async edit(
+        @Param('postId') postId: string,
+        @Headers() headers: Headers,
+        @Body() body: UpdatePostDto,
+    ): Promise<ApiResponseDto> {
         const token = this.authService.extractTokenFromHeader(headers);
         const authorId = this.authService.getAuthorIdByToken(token);
         const { title, content } = body;
@@ -85,10 +98,12 @@ export class PostController {
             });
     }
 
-    // prettier-ignore
     @UseGuards(AuthGuard)
     @Delete(':postId')
-    async delete(@Param('postId') postId: string, @Headers() headers: Headers): Promise<ApiResponseDto> {
+    async delete(
+        @Param('postId') postId: string,
+        @Headers() headers: Headers,
+    ): Promise<ApiResponseDto> {
         const token = this.authService.extractTokenFromHeader(headers);
         const authorId = this.authService.getAuthorIdByToken(token);
 

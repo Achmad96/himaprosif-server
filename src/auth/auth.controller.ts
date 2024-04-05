@@ -7,8 +7,8 @@ import {
     HttpStatus,
 } from '@nestjs/common';
 
-import { AuthService } from '../auth/auth.service';
-import { RefreshTokenDto, SignInDto } from './auth.dto';
+import { AuthService } from '@/auth/auth.service';
+import { RefreshTokenDto, SignInDto } from '@/auth/auth.dto';
 
 @Controller('auth')
 export class AuthController {

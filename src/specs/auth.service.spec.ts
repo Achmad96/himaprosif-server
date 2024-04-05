@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { AuthService } from '../auth/auth.service';
-import { PrismaService } from '../utils/prisma.service';
+import { AuthService } from '@/auth/auth.service';
+import { PrismaService } from '@/utils/prisma.service';
+
 import { UnauthorizedException } from '@nestjs/common';
 
 const admin = [

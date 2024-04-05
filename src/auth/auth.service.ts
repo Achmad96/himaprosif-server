@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { PrismaService } from '../utils/prisma.service';
+import { PrismaService } from '@/utils/prisma.service';
 
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
@@ -20,7 +20,6 @@ export class AuthService {
             throw new UnauthorizedException();
         }
         const { id, username, name } = admin;
-        
         return {
             refresh_token: jwt.sign(
                 {

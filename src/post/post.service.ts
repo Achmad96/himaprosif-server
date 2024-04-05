@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../utils/prisma.service';
+import { PrismaService } from '@/utils/prisma.service';
 
 const PostSelect = {
     id: true,
@@ -28,10 +28,17 @@ export class PostService {
         });
     }
 
-    async getPosts() {
+    async getPosts(page: number = 1) {
+        const skip = (page - 1) * 5;
         return await this.prisma.post.findMany({
             select: PostSelect,
+            skip,
+            take: 5,
         });
+    }
+    async getPostsSize(): Promise<number> {
+        const totalPosts = await this.prisma.post.count();
+        return Math.ceil(totalPosts / 5);
     }
 
     async createPost(authorId: string, title: string, content: string) {

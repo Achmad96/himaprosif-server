@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { PostService } from '../post/post.service';
-import { PrismaService } from '../utils/prisma.service';
+import { PostService } from '@/post/post.service';
+import { PrismaService } from '@/utils/prisma.service';
 
 const posts = [
     {
