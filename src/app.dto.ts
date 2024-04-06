@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, Max, Min } from 'class-validator';
 
 export class ApiResponseDto {
     data?: object;
@@ -7,6 +7,5 @@ export class ApiResponseDto {
     readonly message: string;
 
     @IsNumber()
-    @IsNotEmpty()
     readonly statusCode: number;
 }
