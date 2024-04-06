@@ -64,12 +64,10 @@ export class PostController {
         };
     }
 
+    // prettier-ignore
     @UseGuards(AuthGuard)
     @Post()
-    async create(
-        @Headers() headers: Headers,
-        @Body() body: CreatePostDto,
-    ): Promise<ApiResponseDto> {
+    async create(@Headers() headers: Headers, @Body() body: CreatePostDto): Promise<ApiResponseDto> {
         const token = this.authService.extractTokenFromHeader(headers);
         const authorId = this.authService.getAuthorIdByToken(token);
         const { title, content } = body;
@@ -83,13 +81,10 @@ export class PostController {
             }));
     }
 
+    // prettier-ignore
     @UseGuards(AuthGuard)
-    @Patch(':poBadRequestExceptionstId')
-    async edit(
-        @Param('postId') postId: string,
-        @Headers() headers: Headers,
-        @Body() body: UpdatePostDto,
-    ): Promise<ApiResponseDto> {
+    @Patch(':postId')
+    async edit(@Param('postId') postId: string, @Headers() headers: Headers, @Body() body: UpdatePostDto): Promise<ApiResponseDto> {
         const token = this.authService.extractTokenFromHeader(headers);
         const authorId = this.authService.getAuthorIdByToken(token);
         const { title, content } = body;
@@ -106,12 +101,10 @@ export class PostController {
             });
     }
 
+    // prettier-ignore
     @UseGuards(AuthGuard)
     @Delete(':postId')
-    async delete(
-        @Param('postId') postId: string,
-        @Headers() headers: Headers,
-    ): Promise<ApiResponseDto> {
+    async delete(@Param('postId') postId: string, @Headers() headers: Headers): Promise<ApiResponseDto> {
         const token = this.authService.extractTokenFromHeader(headers);
         const authorId = this.authService.getAuthorIdByToken(token);
 
