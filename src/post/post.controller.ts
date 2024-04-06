@@ -31,16 +31,24 @@ export class PostController {
 
     @Get()
     async findPostById(@Query('id') id: string): Promise<ApiResponseDto> {
-        return this.postService.getPostById(id).then((post) => {
-            if (post === null) {
-                throw new BadRequestException('Post not found');
-            }
-            return {
-                data: post,
-                message: 'Post found',
-                statusCode: 200,
-            };
-        });
+        if (id) {
+            return this.postService.getPostById(id).then((post) => {
+                if (post === null) {
+                    throw new BadRequestException('Post not found');
+                }
+                return {
+                    data: post,
+                    message: 'Post found',
+                    statusCode: 200,
+                };
+            });
+        }
+
+        return {
+            data: null,
+            message: 'Post not found',
+            statusCode: 404,
+        };
     }
 
     @Get(':page')

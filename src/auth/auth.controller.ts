@@ -6,7 +6,6 @@ import {
     HttpCode,
     HttpStatus,
 } from '@nestjs/common';
-
 import { AuthService } from '@/auth/auth.service';
 import { RefreshTokenDto, SignInDto } from '@/auth/auth.dto';
 
