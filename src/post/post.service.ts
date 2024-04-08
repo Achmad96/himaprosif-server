@@ -54,7 +54,6 @@ export class PostService {
         });
     }
 
-    // prettier-ignore
     async editPost(authorId: string, id: string, title: string, content: string) {
         return await this.prisma.post.update({
             where: {
