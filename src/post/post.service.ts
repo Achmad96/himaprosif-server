@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { PrismaService } from "@/prisma.service";
 
 const PostSelect = {
@@ -17,7 +17,8 @@ const PostSelect = {
 
 @Injectable()
 export class PostService {
-    constructor(private readonly prisma: PrismaService) {}
+    @Inject()
+    private readonly prisma: PrismaService;
 
     async getPostById(postId: string) {
         return await this.prisma.post.findUnique({
