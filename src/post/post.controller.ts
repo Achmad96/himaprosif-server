@@ -7,6 +7,7 @@ import { PostService } from "@/post/post.service";
 import { CreatePostDto, UpdatePostDto } from "@/post/post.dto";
 
 import { ApiResponseDto } from "@/app.dto";
+import { SkipThrottle } from "@nestjs/throttler";
 
 @Controller("admin/posts")
 export class PostController {

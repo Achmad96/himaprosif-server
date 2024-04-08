@@ -1,11 +1,12 @@
 import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
-import { ThrottlerModule } from "@nestjs/throttler";
+import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { AuthModule } from "@/auth/auth.module";
 import { PostModule } from "@/post/post.module";
 
 import { AppService } from "@/app.service";
 import { AppController } from "@/app.controller";
+import { APP_GUARD } from "@nestjs/core";
 
 @Module({
     imports: [
@@ -16,7 +17,7 @@ import { AppController } from "@/app.controller";
         }),
         ThrottlerModule.forRoot([
             {
-                ttl: 60000, // millisecond
+                ttl: 60000, // 1 minutes
                 limit: 10,
             },
         ]),
@@ -24,6 +25,12 @@ import { AppController } from "@/app.controller";
         PostModule,
     ],
     controllers: [AppController],
-    providers: [AppService],
+    providers: [
+        AppService,
+        {
+            provide: APP_GUARD,
+            useClass: ThrottlerGuard,
+        },
+    ],
 })
 export class AppModule {}
