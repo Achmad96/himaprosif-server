@@ -36,6 +36,7 @@ export class PostService {
             take: 5,
         });
     }
+
     async getPostsSize(): Promise<number> {
         const totalPosts = await this.prisma.post.count();
         return Math.ceil(totalPosts / 5);
