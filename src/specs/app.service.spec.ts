@@ -1,9 +1,9 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test, TestingModule } from "@nestjs/testing";
 
-import { AppController } from '@/app.controller';
-import { AppService } from '@/app.service';
+import { AppController } from "@/app.controller";
+import { AppService } from "@/app.service";
 
-describe('App Service', () => {
+describe("App Service", () => {
     let appService: AppService;
 
     beforeEach(async () => {
@@ -14,19 +14,15 @@ describe('App Service', () => {
         appService = module.get<AppService>(AppService);
     });
 
-    describe('GET /', () => {
+    describe("GET /", () => {
         it('should return "Hello World!"', () => {
-            jest.spyOn(appService, 'getHello').mockImplementation(
-                () => 'Hello World!',
-            );
+            jest.spyOn(appService, "getHello").mockImplementation(() => "Hello World!");
         });
     });
 
-    describe('POST /', () => {
+    describe("POST /", () => {
         it('should return "Hello [name]"', () => {
-            jest.spyOn(appService, 'sayHello').mockImplementation(
-                (name: string) => `Hello ${name}`,
-            );
+            jest.spyOn(appService, "sayHello").mockImplementation((name: string) => `Hello ${name}`);
         });
     });
 });
