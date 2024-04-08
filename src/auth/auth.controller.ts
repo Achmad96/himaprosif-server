@@ -13,7 +13,7 @@ import { RefreshTokenDto, SignInDto } from '@/auth/auth.dto';
 @Controller('auth')
 export class AuthController {
     @Inject()
-    private service: AuthService;
+    private readonly service: AuthService;
     @HttpCode(HttpStatus.OK)
     @Get()
     async get(@Body() body: SignInDto) {
