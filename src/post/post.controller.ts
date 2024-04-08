@@ -6,6 +6,7 @@ import {
     Get,
     GoneException,
     Headers,
+    Inject,
     NotFoundException,
     Param,
     Patch,
@@ -24,10 +25,11 @@ import { ApiResponseDto } from '@/app.dto';
 
 @Controller('admin/posts')
 export class PostController {
-    constructor(
-        private readonly postService: PostService,
-        private readonly authService: AuthService,
-    ) {}
+    @Inject()
+    private readonly postService: PostService;
+
+    @Inject()
+    private readonly authService: AuthService;
 
     @Get()
     async findPostById(@Query('id') id: string): Promise<ApiResponseDto> {

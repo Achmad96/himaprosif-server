@@ -5,14 +5,15 @@ import {
     Headers,
     HttpCode,
     HttpStatus,
+    Inject,
 } from '@nestjs/common';
 import { AuthService } from '@/auth/auth.service';
 import { RefreshTokenDto, SignInDto } from '@/auth/auth.dto';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly service: AuthService) {}
-
+    @Inject()
+    private service: AuthService;
     @HttpCode(HttpStatus.OK)
     @Get()
     async get(@Body() body: SignInDto) {
