@@ -1,13 +1,12 @@
 import { BadRequestException, Body, Controller, Delete, Get, GoneException, Headers, Inject, NotFoundException, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 
 import { AuthGuard } from '@/auth/auth.guard';
-import { AuthService } from '@/auth/auth.service';
+import { AuthService } from '@/auth/service/auth.service';
 
-import { PostService } from '@/post/post.service';
+import { PostService } from '@/post/service/post.service';
 import { CreatePostDto, UpdatePostDto } from '@/post/post.dto';
 
 import { ApiResponseDto } from '@/app.dto';
-import { SkipThrottle } from '@nestjs/throttler';
 
 @Controller('admin/posts')
 export class PostController {

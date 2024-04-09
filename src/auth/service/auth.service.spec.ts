@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { AuthService } from '@/auth/auth.service';
+import { AuthService } from '@/auth/service/auth.service';
 import { PrismaService } from '@/prisma.service';
 
 import { UnauthorizedException } from '@nestjs/common';
