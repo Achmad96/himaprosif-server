@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from '@/prisma.service';
 
 import * as bcrypt from 'bcryptjs';
@@ -6,7 +6,9 @@ import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly prismaService: PrismaService) {}
+    @Inject()
+    private readonly prismaService: PrismaService;
+
     async signIn(usernameInput: string, passwordInput: string): Promise<{ access_token: string; refresh_token: string; statusCode: 200 }> {
         const admin = await this.prismaService.admin.findUnique({ where: { username: usernameInput } });
         if (!admin) throw new UnauthorizedException();
