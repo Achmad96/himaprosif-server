@@ -10,8 +10,8 @@ export class AuthService {
     async signIn(usernameInput: string, passwordInput: string): Promise<{ access_token: string; refresh_token: string; statusCode: 200 }> {
         const admin = await this.prismaService.admin.findUnique({ where: { username: usernameInput } });
         if (!admin) throw new UnauthorizedException();
-        const match = await bcrypt.compare(passwordInput, admin.password);
-        if (!match) throw new UnauthorizedException();
+        const passwordMatch = await bcrypt.compare(passwordInput, admin.password);
+        if (!passwordMatch) throw new UnauthorizedException();
         const { id, username, name } = admin;
         return {
             refresh_token: jwt.sign(
