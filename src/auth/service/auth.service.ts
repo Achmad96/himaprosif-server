@@ -8,12 +8,8 @@ import * as jwt from 'jsonwebtoken';
 export class AuthService {
     constructor(private readonly prismaService: PrismaService) {}
     async signIn(usernameInput: string, passwordInput: string): Promise<{ access_token: string; refresh_token: string; statusCode: 200 }> {
-        const admin = await this.prismaService.admin.findUnique({
-            where: { username: usernameInput },
-        });
-        if (!admin) {
-            throw new UnauthorizedException();
-        }
+        const admin = await this.prismaService.admin.findUnique({ where: { username: usernameInput } });
+        if (!admin) throw new UnauthorizedException();
         const match = await bcrypt.compare(passwordInput, admin.password);
         if (!match) {
             throw new UnauthorizedException();
