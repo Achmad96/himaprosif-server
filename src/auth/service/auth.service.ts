@@ -11,9 +11,7 @@ export class AuthService {
         const admin = await this.prismaService.admin.findUnique({ where: { username: usernameInput } });
         if (!admin) throw new UnauthorizedException();
         const match = await bcrypt.compare(passwordInput, admin.password);
-        if (!match) {
-            throw new UnauthorizedException();
-        }
+        if (!match) throw new UnauthorizedException();
         const { id, username, name } = admin;
         return {
             refresh_token: jwt.sign(
