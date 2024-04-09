@@ -1,8 +1,8 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { PrismaService } from "@/prisma.service";
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { PrismaService } from '@/prisma.service';
 
-import * as bcrypt from "bcryptjs";
-import * as jwt from "jsonwebtoken";
+import * as bcrypt from 'bcryptjs';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthService {
@@ -43,7 +43,7 @@ export class AuthService {
             if (err) {
                 throw new UnauthorizedException();
             }
-            const { data } = res["data"];
+            const { data } = res['data'];
             const { id, username, name } = data;
             return {
                 access_token: jwt.sign(
@@ -59,12 +59,12 @@ export class AuthService {
     }
 
     extractTokenFromHeader(headers: Headers): string | undefined {
-        const [type, token] = headers["authorization"]?.split(" ") ?? [];
-        return type === "Bearer" ? token : undefined;
+        const [type, token] = headers['authorization']?.split(' ') ?? [];
+        return type === 'Bearer' ? token : undefined;
     }
 
     getAuthorIdByToken(token: string): string {
         const payload = jwt.verify(token, process.env.ACCESS_SECRET);
-        return payload ? payload["data"].id : undefined;
+        return payload ? payload['data'].id : undefined;
     }
 }

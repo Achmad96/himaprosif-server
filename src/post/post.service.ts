@@ -1,5 +1,5 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { PrismaService } from "@/prisma.service";
+import { Inject, Injectable } from '@nestjs/common';
+import { PrismaService } from '@/prisma.service';
 
 const PostSelect = {
     id: true,

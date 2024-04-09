@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Headers, HttpCode, HttpStatus, Inject } from "@nestjs/common";
-import { AuthService } from "@/auth/auth.service";
-import { RefreshTokenDto, SignInDto } from "@/auth/auth.dto";
+import { Body, Controller, Get, Headers, HttpCode, HttpStatus, Inject } from '@nestjs/common';
+import { AuthService } from '@/auth/auth.service';
+import { RefreshTokenDto, SignInDto } from '@/auth/auth.dto';
 
-@Controller("auth")
+@Controller('auth')
 export class AuthController {
     @Inject()
     private readonly service: AuthService;
@@ -14,7 +14,7 @@ export class AuthController {
     }
 
     @HttpCode(HttpStatus.OK)
-    @Get("refresh_token")
+    @Get('refresh_token')
     getMe(@Headers() header: RefreshTokenDto) {
         return this.service.verifyRefreshToken(header.refreshToken);
     }
